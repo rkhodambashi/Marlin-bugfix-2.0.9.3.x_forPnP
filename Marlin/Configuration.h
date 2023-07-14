@@ -1046,7 +1046,7 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 400, 500, 500} // X,Y,Z,I(second Z),E1,E2
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600, 500, 500} // X,Y,Z,I(second Z),E1,E2
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
@@ -1534,7 +1534,7 @@
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250
 #define I_MIN_POS 0
-#define I_MAX_POS 50
+#define I_MAX_POS 1000
 //#define J_MIN_POS 0
 //#define J_MAX_POS 50
 //#define K_MIN_POS 0
