@@ -104,7 +104,7 @@
   #define MOTHERBOARD BOARD_BTT_OCTOPUS_V1_1
 #endif
 
-//==================== things that change based on the number of steppers/extruders====================
+//==================== Roozbeh: things that change based on the number of steppers/extruders====================
 //==================== included here for easier search/access==========================================
 // #define X_DRIVER_TYPE  TMC2209
 // #define EXTRUDERS 2
@@ -115,23 +115,27 @@
 // #define INVERT_X_DIR false
 // #define X_HOME_DIR -1
 // #define X_MIN_POS 0
-// #define HOMING_FEEDRATE_MM_M
+// #define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60), (4*60)}// X,Y,Z,I,J
 // #define PREVENT_COLD_EXTRUSION
 // #define EXTRUDE_MINTEMP 170
+// #define DEFAULT_MAX_FEEDRATE
+// #define DEFAULT_MAX_ACCELERATION
+
 //===================================configuration_adv.h=================================================================
 // #define HOMING_BUMP_MM
 // #define HOMING_BUMP_DIVISOR
 // #define AXIS_RELATIVE_MODES
+//#define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 4*60, 4*60, 2*60 }//X,Y,Z,I,J,E should match the number of motors 
 
 
-// E4 for dual axis auto-assignment
-#define E4_STEP_PIN   PG4   // MOTOR 3
-#define E4_DIR_PIN    PC1
-#define E4_ENABLE_PIN PA0
+// // E4 for dual axis auto-assignment
+// #define E4_STEP_PIN   PG4   // MOTOR 3
+// #define E4_DIR_PIN    PC1
+// #define E4_ENABLE_PIN PA0
 
 // Endstop pins
 // #define I_MIN_PIN     PG11  // Z2-STOP
-//#define J_MIN_PIN     PG12  // E0DET
+// #define J_MIN_PIN     PG12  // E0DET
 // #define K_MIN_PIN     PG13  // E1DET
 // #define U_MIN_PIN     PG14  // E2DET
 // #define V_MIN_PIN     PG15  // E3DET
@@ -210,7 +214,7 @@
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
 #define I_DRIVER_TYPE  TMC2209
-//#define J_DRIVER_TYPE  A4988
+#define J_DRIVER_TYPE  TMC2209
 //#define K_DRIVER_TYPE  A4988
 //#define U_DRIVER_TYPE  A4988
 //#define V_DRIVER_TYPE  A4988
@@ -914,7 +918,7 @@
 #define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
 #define USE_IMIN_PLUG
-//#define USE_JMIN_PLUG
+#define USE_JMIN_PLUG
 //#define USE_KMIN_PLUG
 //#define USE_UMIN_PLUG
 //#define USE_VMIN_PLUG
@@ -1046,14 +1050,16 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600, 500, 500} // X,Y,Z,I(second Z),E1,E2
-
+// #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600,500, 500} // X,Y,Z,I(second Z),E1,E2
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600, 1600, 500, 500} // X,Y,Z,I(second Z),J(spinCoater),E1,E2
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 10000, 10000 }// X,Y,Z,I(second Z),E default is 300, 300, 5, 25 
+// #define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 10000, 10000 }// X,Y,Z,I(second Z),E default is 300, 300, 5, 25 
+#define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 50000, 10000, 10000 }// X,Y,Z,I(second Z),J(spinCoater),E1,E2 default is 300, 300, 5, 25 
+// #define DEFAULT_MAX_FEEDRATE          { 600, 50000, 50, 50, 50000, 10000, 10000 }// X,Y,Z,I(second Z),J(spinCoater),E1,E2 default is 300, 300, 5, 25 
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1066,7 +1072,9 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100, 10000, 10000  } // X,Y,Z,I(second Z),E
+// #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100, 10000, 10000  } // X,Y,Z,I(second Z),E
+#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100,10000, 10000, 10000  } // X,Y,Z,I(second Z),J(spinCoater),E
+// #define DEFAULT_MAX_ACCELERATION      { 3000, 10000, 100, 100,10000, 10000, 10000  } // X,Y,Z,I(second Z),J(spinCoater),E
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1081,9 +1089,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          30000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   30000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1440,7 +1448,7 @@
 #define Z_ENABLE_ON 0
 #define E_ENABLE_ON 0 // For all extruders
 #define I_ENABLE_ON 0
-//#define J_ENABLE_ON 0
+#define J_ENABLE_ON 0
 //#define K_ENABLE_ON 0
 //#define U_ENABLE_ON 0
 //#define V_ENABLE_ON 0
@@ -1452,7 +1460,7 @@
 #define DISABLE_Y false
 #define DISABLE_Z false
 #define DISABLE_I false
-//#define DISABLE_J false
+#define DISABLE_J false
 //#define DISABLE_K false
 //#define DISABLE_U false
 //#define DISABLE_V false
@@ -1473,7 +1481,7 @@
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR true
 #define INVERT_I_DIR true
-//#define INVERT_J_DIR false
+#define INVERT_J_DIR false
 //#define INVERT_K_DIR false
 //#define INVERT_U_DIR false
 //#define INVERT_V_DIR false
@@ -1514,7 +1522,7 @@
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 #define I_HOME_DIR -1
-//#define J_HOME_DIR -1
+#define J_HOME_DIR -1
 //#define K_HOME_DIR -1
 //#define U_HOME_DIR -1
 //#define V_HOME_DIR -1
@@ -1535,8 +1543,8 @@
 #define Z_MAX_POS 250
 #define I_MIN_POS 0
 #define I_MAX_POS 1000
-//#define J_MIN_POS 0
-//#define J_MAX_POS 50
+#define J_MIN_POS 0
+#define J_MAX_POS 50000//since spin coater is continous motion
 //#define K_MIN_POS 0
 //#define K_MAX_POS 50
 //#define U_MIN_POS 0
@@ -1914,7 +1922,8 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60)}
+// #define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60)}
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60), (4*60)}
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
