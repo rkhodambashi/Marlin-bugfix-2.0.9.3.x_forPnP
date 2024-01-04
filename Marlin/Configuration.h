@@ -113,6 +113,8 @@
 // #define DISTINCT_E_FACTORS
 // #define DEFAULT_AXIS_STEPS_PER_UNIT
 // #define INVERT_X_DIR false
+// #define DISABLE_X false
+// #define X_ENABLE_ON
 // #define X_HOME_DIR -1
 // #define X_MIN_POS 0
 // #define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60), (4*60)}// X,Y,Z,I,J
@@ -208,7 +210,7 @@
 #define X_DRIVER_TYPE  TMC2209
 #define Y_DRIVER_TYPE  TMC2209
 #define Z_DRIVER_TYPE  TMC2209
-//#define X2_DRIVER_TYPE A4988
+// #define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
@@ -221,7 +223,7 @@
 //#define W_DRIVER_TYPE  A4988
 #define E0_DRIVER_TYPE TMC2209
 #define E1_DRIVER_TYPE TMC2209
-//#define E2_DRIVER_TYPE A4988
+#define E2_DRIVER_TYPE TMC2209
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
 //#define E5_DRIVER_TYPE A4988
@@ -274,7 +276,7 @@
 
 // This defines the number of extruders
 // :[0, 1, 2, 3, 4, 5, 6, 7, 8]
-#define EXTRUDERS 2
+#define EXTRUDERS 3
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
 #define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
@@ -580,7 +582,7 @@
  */
 #define TEMP_SENSOR_0 998
 #define TEMP_SENSOR_1 998
-#define TEMP_SENSOR_2 0
+#define TEMP_SENSOR_2 998
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_5 0
@@ -1051,14 +1053,14 @@
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
 // #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600,500, 500} // X,Y,Z,I(second Z),E1,E2
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600, 1600, 500, 500} // X,Y,Z,I(second Z),J(spinCoater),E1,E2
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 1600, 1600, 500, 500, 500} // X,Y,Z,I(second Z),J(spinCoater),E1,E2
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
 // #define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 10000, 10000 }// X,Y,Z,I(second Z),E default is 300, 300, 5, 25 
-#define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 50000, 10000, 10000 }// X,Y,Z,I(second Z),J(spinCoater),E1,E2 default is 300, 300, 5, 25 
+#define DEFAULT_MAX_FEEDRATE          { 600, 600, 50, 50, 50000, 10000, 10000, 10000 }// X,Y,Z,I(second Z),J(spinCoater),E1,E2 default is 300, 300, 5, 25 
 // #define DEFAULT_MAX_FEEDRATE          { 600, 50000, 50, 50, 50000, 10000, 10000 }// X,Y,Z,I(second Z),J(spinCoater),E1,E2 default is 300, 300, 5, 25 
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
@@ -1073,7 +1075,7 @@
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
 // #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100, 10000, 10000  } // X,Y,Z,I(second Z),E
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100,10000, 10000, 10000  } // X,Y,Z,I(second Z),J(spinCoater),E
+#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 100,10000, 10000, 10000, 10000  } // X,Y,Z,I(second Z),J(spinCoater),E
 // #define DEFAULT_MAX_ACCELERATION      { 3000, 10000, 100, 100,10000, 10000, 10000  } // X,Y,Z,I(second Z),J(spinCoater),E
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
@@ -1543,7 +1545,7 @@
 #define Z_MAX_POS 250
 #define I_MIN_POS 0
 #define I_MAX_POS 1000
-#define J_MIN_POS 0
+#define J_MIN_POS -50000
 #define J_MAX_POS 50000//since spin coater is continous motion
 //#define K_MIN_POS 0
 //#define K_MAX_POS 50
@@ -1923,7 +1925,7 @@
 
 // Homing speeds (linear=mm/min, rotational=°/min)
 // #define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60)}
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60), (4*60)}
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (4*60), (60)}
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
